@@ -19,9 +19,30 @@
   </head>
   <body>
     <div class="container">
-      <h1>
-        It works!
+      <h1 class="mb-5 border-bottom border-light">
+        Turn PDF tables into a CSV file
       </h1>
+      <div class="text-center">
+        <div>
+          <input type="file" id="pdf-file" hidden />
+          <label for="pdf-file" class="btn btn-secondary select-button">
+            Select file
+          </label>
+        </div>
+        <div
+          id="loader-indicator"
+          class="spinner-border text-primary m-5"
+          role="status"
+          style="display: none"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div id="download-button" class="m-3" style="display: none">
+          <button onclick="saveFile()" class="btn btn-primary">
+            Download
+          </button>
+        </div>
+      </div>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -38,6 +59,17 @@
       integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
       crossorigin="anonymous"
     ></script>
-    <script src="./index.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.4.456/pdf.min.js"
+      integrity="sha512-i+UmpoqoJqHkpXQ3mQfaIF8UZ2RAGoyqJvMzAKTadhBVhRk883EHluxdPsMf7c5/43D5tVpwIE8KLE1kQa0uCg=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.4.456/pdf.worker.min.js"
+      integrity="sha512-NuVK4+sDE809oDhbdAABRO1nTe80t56vXda8dg1UQ+RcQ8x7WakwTzKE7LOosoNCKi7EH7FXo7mritFNWpZiLQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/pdf-table-extractor.js"></script>
+    <script src="js/index.js"></script>
   </body>
 </html>
