@@ -8,7 +8,7 @@ function handleFile(e) {
   {
     var reader = new FileReader();
     filename = f.name.replace(/\.pdf/, ".csv");
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       var data = e.target.result;
       parse_content(data); //btoa(arr));
     };
@@ -18,9 +18,9 @@ function handleFile(e) {
 
 $("#pdf-file").on("change", handleFile);
 
-const cleanNewLine = str => str.replace(/(\r\n|\n|\r)/gm, "");
+const cleanNewLine = (str) => str.replace(/(\r\n|\n|\r)/gm, "");
 
-const parse_content = function(content) {
+const parse_content = function (content) {
   pdfjsLib.GlobalWorkerOptions.workerSrc =
     "//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.4.456/pdf.worker.min.js";
   pdfjsLib.cMapUrl = "//mozilla.github.io/pdf.js/web/cmaps/";
@@ -28,10 +28,11 @@ const parse_content = function(content) {
 
   let loadingTask = pdfjsLib.getDocument(content);
 
-  loadingTask.promise.then(pdf_table_extractor).then(result => {
-    const newPages = result.pageTables.map(page =>
+  loadingTask.promise.then(pdf_table_extractor).then((result) => {
+    const newPages = result.pageTables.map((page) =>
       page.tables
-        .map(table => table.join(","))
+        .map((row) => row.join(","))
+        .filter((row) => !/,{3,}/.test(row))
         .map(cleanNewLine)
         .join("\n")
     );
@@ -41,7 +42,7 @@ const parse_content = function(content) {
   });
 };
 
-const saveFile = function() {
+const saveFile = function () {
   const blob = new Blob([data], { type: "text/csv" });
   if (window.navigator.msSaveOrOpenBlob) {
     window.navigator.msSaveBlob(blob, filename);
